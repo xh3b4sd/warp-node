@@ -1,19 +1,62 @@
 
+function startServer(cb) {
+  var server = require('http').createServer(function (request, response) {
+    response.writeHead(200, {'Content-Type': 'text/plain'});
+    response.end("pong");
+  });
+
+  server.listen("8124", function () {
+    cb();
+  });
+
+  server.on("error", function (err) {
+    throw err;
+  });
+
+  return server;
+}
+
 var Warp = require("../index.js");
 
 describe("Request", function () {
-  var warp, server, run;
+  var warp, server;
 
   beforeEach(function () {
-    warp = Warp.createWarp();
+    warp = Warp.create({
+      url: "GET http://localhost:8124", // test that url
+      repeat: 10,                       // repeat the test 10 times
+      delay: 200                        // delay each test 20 ms
+    });
+
+    server = startServer(function () {
+      warp.activate();
+    });
   });
 
-  it("should respond", function () {
+  afterEach(function () {
+    server.close();
+  });
+
+  it("should not throw errors", function () {
+    warp.request.repeat = 5;
+
+    warp.execute(function (err, res, data) {
+      expect(err).toBeUndefined();
+    });
+  });
+
+  it("should respond with status code 200", function () {
     warp.request.url = "GET http://localhost:8124";
 
-    warp.request.call(function (err, res, data) {
-      expect(err).toBeUndefined();
+    warp.execute(function (err, res, data) {
       expect(res.statusCode).toBe(200);
+    });
+  });
+
+  it("should respond with pong", function () {
+    warp.request.delay = 4000;
+
+    warp.execute(function (err, res, data) {
       expect(data).toBe("pong");
     });
   });
