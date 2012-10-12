@@ -1,4 +1,10 @@
 
+/**
+ *
+ * Test server to test against
+ *
+ */
+
 function startServer(cb) {
   var server = require('http').createServer(function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/plain'});
@@ -16,7 +22,13 @@ function startServer(cb) {
   return server;
 }
 
-var Warp = require("../index.js");
+/**
+ *
+ * Usage
+ *
+ */
+
+var Warp = require("../index.js");      // normaly just do require("warp")
 
 describe("Request", function () {
   var warp, server;
