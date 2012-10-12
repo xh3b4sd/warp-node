@@ -25,7 +25,7 @@ describe("Request", function () {
     warp = Warp.create({
       url: "GET http://localhost:8124", // test that url
       repeat: 10,                       // repeat the test 10 times
-      delay: 200                        // delay each test 20 ms
+      delay: 200                        // delay each test 200 ms
     });
 
     server = startServer(function () {
@@ -54,7 +54,7 @@ describe("Request", function () {
   });
 
   it("should respond with pong", function () {
-    warp.request.delay = 4000;
+    warp.request.delay = 500;
 
     warp.execute(function (err, res, data) {
       expect(data).toBe("pong");
