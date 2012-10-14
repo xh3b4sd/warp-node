@@ -5,7 +5,7 @@ Integration-Test-Framework to simply request a server
 
 ## Install
 
-  npm install warp-node
+    npm install warp-node
 
 ## Usage
 
