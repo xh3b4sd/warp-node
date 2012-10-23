@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/zyndiecate/warp-node)](https://travis-ci.org/zyndiecate/warp-node)
+[![Build Status](https://travis-ci.org/zyndiecate/warp-node.png)](https://travis-ci.org/zyndiecate/warp-node)
 
 Warp
 ====
