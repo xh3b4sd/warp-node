@@ -19,27 +19,75 @@ describe("Repeating Requests", function () {
     server.close();
   });
 
-  it("should repeat requests 2 times", function () {
-    warp.request.repeat = 2;
+  describe("2 times", function () {
+    beforeEach(function () {
+      warp.request.repeat = 2;
+    });
 
-    warp.execute(function (dataForCalls) {
-      expect(dataForCalls.length).toBe(warp.request.repeat);
+    it("should respond without errors", function () {
+      warp.execute(function (err, res, data) {
+        expect(err).toBeUndefined();
+      });
+    });
+
+    it("should respond with status code 200", function () {
+      warp.execute(function (err, res, data) {
+        expect(res.statusCode).toEqual(200);
+      });
+    });
+
+    it("should respond with 'pong'", function () {
+      warp.execute(function (err, res, data) {
+        expect(data).toEqual("pong");
+      });
     });
   });
 
-  it("should repeat requests 5 times", function () {
-    warp.request.repeat = 5;
+  describe("5 times", function () {
+    beforeEach(function () {
+      warp.request.repeat = 5;
+    });
 
-    warp.execute(function (dataForCalls) {
-      expect(dataForCalls.length).toBe(warp.request.repeat);
+    it("should respond without errors", function () {
+      warp.execute(function (err, res, data) {
+        expect(err).toBeUndefined();
+      });
+    });
+
+    it("should respond with status code 200", function () {
+      warp.execute(function (err, res, data) {
+        expect(res.statusCode).toEqual(200);
+      });
+    });
+
+    it("should respond with 'pong'", function () {
+      warp.execute(function (err, res, data) {
+        expect(data).toEqual("pong");
+      });
     });
   });
 
-  it("should repeat requests 10 times", function () {
-    warp.request.repeat = 10;
+  describe("10 times", function () {
+    beforeEach(function () {
+      warp.request.repeat = 10;
+    });
 
-    warp.execute(function (dataForCalls) {
-      expect(dataForCalls.length).toBe(warp.request.repeat);
+    it("should respond without errors", function () {
+      warp.execute(function (err, res, data) {
+        expect(err).toBeUndefined();
+      });
+    });
+
+    it("should respond with status code 200", function () {
+      warp.execute(function (err, res, data) {
+        expect(res.statusCode).toEqual(200);
+      });
+    });
+
+    it("should respond with 'pong'", function () {
+      warp.execute(function (err, res, data) {
+        expect(data).toEqual("pong");
+      });
     });
   });
 });

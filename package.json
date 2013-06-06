@@ -2,12 +2,12 @@
   "name": "warp-node",
   "description": "http request wrapper for jasmine integration testing",
   "author": "Tim Schindler <tim.schindler@adcloud.com>",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "dependencies": {
-    "underscore": "1.4.2"
+    "underscore": "1.4.4"
   },
   "devDependencies": {
-    "jasmine-node": "1.0.21"
+    "jasmine-node": "1.8.0"
   },
   "scripts": {
     "test": "node_modules/jasmine-node/bin/jasmine-node spec/"
