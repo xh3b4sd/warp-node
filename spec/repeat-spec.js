@@ -19,14 +19,14 @@ describe("Repeating Requests", function () {
     server.close();
   });
 
-  describe("2 times", function () {
+  describe("1 times", function () {
     beforeEach(function () {
-      warp.request.repeat = 2;
+      warp.request.repeat = 1;
     });
 
     it("should respond without errors", function () {
       warp.execute(function (err, res, data) {
-        expect(err).toBeUndefined();
+        expect(err).toEqual(undefined);
       });
     });
 
@@ -39,6 +39,33 @@ describe("Repeating Requests", function () {
     it("should respond with 'pong'", function () {
       warp.execute(function (err, res, data) {
         expect(data).toEqual("pong");
+      });
+    });
+  });
+
+  describe("2 times", function () {
+    beforeEach(function () {
+      warp.request.repeat = 2;
+    });
+
+    it("should respond without errors", function () {
+      warp.execute(function (errForCalls, resForCalls, dataForCalls) {
+        expect(errForCalls.length).toEqual(2);
+        expect(errForCalls).toEqual([ undefined, undefined ]);
+      });
+    });
+
+    it("should respond with status code 200", function () {
+      warp.execute(function (errForCalls, resForCalls, dataForCalls) {
+        expect(resForCalls.length).toEqual(2);
+        expect(resForCalls.map(function (res) { return res.statusCode; })).toEqual([ 200, 200 ]);
+      });
+    });
+
+    it("should respond with 'pong'", function () {
+      warp.execute(function (errForCalls, resForCalls, dataForCalls) {
+        expect(dataForCalls.length).toEqual(2);
+        expect(dataForCalls).toEqual([ "pong", "pong" ]);
       });
     });
   });
@@ -49,44 +76,23 @@ describe("Repeating Requests", function () {
     });
 
     it("should respond without errors", function () {
-      warp.execute(function (err, res, data) {
-        expect(err).toBeUndefined();
+      warp.execute(function (errForCalls, resForCalls, dataForCalls) {
+        expect(errForCalls.length).toEqual(5);
+        expect(errForCalls).toEqual([ undefined, undefined, undefined, undefined, undefined ]);
       });
     });
 
     it("should respond with status code 200", function () {
-      warp.execute(function (err, res, data) {
-        expect(res.statusCode).toEqual(200);
+      warp.execute(function (errForCalls, resForCalls, dataForCalls) {
+        expect(resForCalls.length).toEqual(5);
+        expect(resForCalls.map(function (res) { return res.statusCode; })).toEqual([ 200, 200, 200, 200, 200 ]);
       });
     });
 
     it("should respond with 'pong'", function () {
-      warp.execute(function (err, res, data) {
-        expect(data).toEqual("pong");
-      });
-    });
-  });
-
-  describe("10 times", function () {
-    beforeEach(function () {
-      warp.request.repeat = 10;
-    });
-
-    it("should respond without errors", function () {
-      warp.execute(function (err, res, data) {
-        expect(err).toBeUndefined();
-      });
-    });
-
-    it("should respond with status code 200", function () {
-      warp.execute(function (err, res, data) {
-        expect(res.statusCode).toEqual(200);
-      });
-    });
-
-    it("should respond with 'pong'", function () {
-      warp.execute(function (err, res, data) {
-        expect(data).toEqual("pong");
+      warp.execute(function (errForCalls, resForCalls, dataForCalls) {
+        expect(dataForCalls.length).toEqual(5);
+        expect(dataForCalls).toEqual([ "pong", "pong", "pong", "pong", "pong" ]);
       });
     });
   });

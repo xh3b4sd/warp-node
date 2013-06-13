@@ -25,7 +25,7 @@ describe "topic", ->
   beforeEach ->
     warp = Warp.create()
     warp.request.url = "GET http://localhost:3000/ping"
-    warp.request.repeat = 5
+    warp.request.repeat = 1
     warp.request.delay = 200
     warp.request.headers = { "x-forwarded-for": "127.0.0.1" }
 
@@ -39,7 +39,7 @@ describe "topic", ->
 
   it "should respond with status code 200", ->
     warp.execute (err, res, data) -> expect(res.statusCode).toEqual(200)
-    
+
 
   it "should respond with 'pong'", ->
     warp.execute (err, res, data) -> expect(data).toEqual("pong")
@@ -90,7 +90,10 @@ Getter/Setter, encoding of receiving response.
 
 ### warp.request.repeat
 
-Getter/Setter, number of times the request have to be repeated.
+Getter/Setter, number of times the request have to be repeated. `repeat`
+defaults to 1. If it is set to something higher the response data format
+changes from single values to lists of values for each call. See
+[warp.execute](https://github.com/zyndiecate/warp-node#warpexecute-err-res-data).
 
 
 ### warp.request.delay
@@ -98,9 +101,11 @@ Getter/Setter, number of times the request have to be repeated.
 Getter/Setter, number of milliseconds the request call have to be delayed.
 
 
-### warp.execute (err, res, data)
+### warp.execute (err|errForCalls, res|resForCalls, data|dataForCalls)
 
-Executing the test. Given callbacl provides the following.
+Executing the test. Given callback provides the following information as single
+items. If `warp.request.repeat` is set to something higher than 1, the provided
+information are lists containing the data for each repeated request.
 
 * `err`, error object if something went wrong, else `undefined`
 * `res`, http response object
