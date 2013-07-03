@@ -1,6 +1,4 @@
-
-var qs = require("querystring")
-  , Warp = require("../index")
+var Warp = require("../index")
   , TestServer = require("./lib/test-server");
 
 describe("POST Requests", function () {
@@ -11,13 +9,8 @@ describe("POST Requests", function () {
       url: "POST http://localhost:8124",
     });
 
-    warp.request.data = qs.stringify({
+    warp.request.data = {
       some: "data"
-    });
-
-    warp.request.headers = {
-      "Content-Type": "application/json",
-      "Content-Length": warp.request.data.length
     };
 
     server = TestServer(function () {
@@ -48,9 +41,9 @@ describe("POST Requests", function () {
   });
 
   it("should respond with \"not ok\" if wrong data was send", function () {
-    warp.request.data = qs.stringify({
+    warp.request.data = {
       some: "wrong data"
-    });
+    };
 
     warp.execute(function (err, res, data) {
       expect(data).toBe("not ok");
