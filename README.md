@@ -22,6 +22,10 @@ Warp = require "warp-node"
 
 
 describe "topic", ->
+  [ warp ] = []
+  
+  
+  
   beforeEach ->
     warp = Warp.create()
     warp.request.url = "GET http://localhost:3000/ping"
@@ -29,21 +33,23 @@ describe "topic", ->
     warp.request.delay = 200
     warp.request.headers = { "x-forwarded-for": "127.0.0.1" }
 
-    # Doing some asynchronous things, like starting a server.
+    # Doing some asynchronous things, like starting a server and than call `warp.activate()`.
     warp.activate()
 
 
+  
   it "should respond without errors", ->
     warp.execute (err, res, data) -> expect(err).toBeUndefined()
 
 
+  
   it "should respond with status code 200", ->
     warp.execute (err, res, data) -> expect(res.statusCode).toEqual(200)
 
 
+  
   it "should respond with 'pong'", ->
     warp.execute (err, res, data) -> expect(data).toEqual("pong")
-
 ```
 
 
