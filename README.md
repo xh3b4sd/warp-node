@@ -62,7 +62,7 @@ Creating a new `warp` instance. Options is optionally an object with the followi
 
 ```coffeescript
 url: "GET http://localhost:3000/ping"   # Defining url for GET or POST requests including port and path
-data: "foo"                             # Data to be send using POST requests
+data: { object: "to be send" }          # Data to be send using POST requests
 encoding: "UTF8"                        # Encoding of given data
 resEncoding: "UTF8"                     # Encoding of receiving response
 repeat: 5                               # Number of times the request have to be repeated
